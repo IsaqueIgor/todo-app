@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { ItemWrapper } from './ItemWrapper';
 
 import trashIcon from '../assets/icons/trash/trash.png';
+import editIcon from '../assets/icons/edit.png';
 
 export interface Task {
   id: number;
@@ -24,11 +25,13 @@ interface TasksListProps {
   tasks: Task[];
   toggleTaskDone: (id: number) => void;
   removeTask: (id: number) => void;
+  editTask: (id: number) => void;
 }
 
 export function TasksList({
   tasks,
   toggleTaskDone,
+  editTask,
   removeTask,
 }: TasksListProps) {
   return (
@@ -59,14 +62,23 @@ export function TasksList({
                 </Text>
               </TouchableOpacity>
             </View>
+            <View style={styles.actionsWrapper}>
+              <TouchableOpacity
+                testID={`edit-${index}`}
+                style={{ marginHorizontal: 10 }}
+                onPress={() => editTask(item.id)}
+              >
+                <Image source={editIcon} />
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              testID={`trash-${index}`}
-              style={{ paddingHorizontal: 24 }}
-              onPress={() => removeTask(item.id)}
-            >
-              <Image source={trashIcon} />
-            </TouchableOpacity>
+              <TouchableOpacity
+                testID={`trash-${index}`}
+                style={{ marginHorizontal: 10 }}
+                onPress={() => removeTask(item.id)}
+              >
+                <Image source={trashIcon} />
+              </TouchableOpacity>
+            </View>
           </ItemWrapper>
         );
       }}
@@ -114,5 +126,9 @@ const styles = StyleSheet.create({
     color: '#1DB863',
     textDecorationLine: 'line-through',
     fontFamily: 'Inter-Medium',
+  },
+  actionsWrapper: {
+    paddingHorizontal: 22,
+    flexDirection: 'row',
   },
 });

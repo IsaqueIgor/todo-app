@@ -40,6 +40,11 @@ export function Home() {
     setTasks(newTasks);
   }
 
+  function handleEditTask(id: number) {
+    console.log('handleEditTask');
+    const newTasks = [...tasks];
+  }
+
   return (
     <View style={styles.container}>
       <Header tasksCounter={tasks.length} />
@@ -48,6 +53,7 @@ export function Home() {
 
       <TasksList
         tasks={tasks}
+        editTask={handleEditTask}
         toggleTaskDone={handleToggleTaskDone}
         removeTask={handleRemoveTask}
       />
