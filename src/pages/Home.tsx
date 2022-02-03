@@ -5,6 +5,11 @@ import { Header } from '../components/Header';
 import { Task, TasksList } from '../components/TasksList';
 import { TodoInput } from '../components/TodoInput';
 
+export type EditTaskArgs = {
+  taskId: number;
+  taskNewTitle: string;
+};
+
 export function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -63,9 +68,17 @@ export function Home() {
     ]);
   }
 
-  function handleEditTask(id: number) {
+  function handleEditTask({ taskId, taskNewTitle }: EditTaskArgs) {
     console.log('handleEditTask');
-    const newTasks = [...tasks];
+    const updatedTasks = [...tasks];
+
+    const taskToBeUpdated = updatedTasks.find((task) => task.id === taskId);
+
+    if (!taskToBeUpdated) return;
+
+    taskToBeUpdated.title = taskNewTitle;
+
+    setTasks(updatedTasks);
   }
 
   return (
